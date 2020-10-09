@@ -33,8 +33,8 @@ os.system("sbatch --wait  --array=1-%s anim_pcolormesh.py %s %s %s" % (nt, rundi
 
 ## animate and delete .pngs 
 with imageio.get_writer('/users/mjr583/scratch/GC/%s/%s/plots/%s.gif' % (version, rundir, species), mode='I') as writer:
-    for png in sorted(glob.glob('/users/mjr583/scratch/GC/%s/%s/plots/pcolorm*png' % (version, rundir))):
+    for png in sorted(glob.glob('/users/mjr583/scratch/GC/%s/%s/plots/pcolorm_*%s*png' % (version, rundir, species))):
         print(png)
         image = imageio.imread(png) 
         writer.append_data(image)
-#os.system("rm /users/mjr583/scratch/GC/%s/%s/plots/pcolorm_*png" % (version, rundir) )
+os.system("rm /users/mjr583/scratch/GC/%s/%s/plots/pcolorm_*%s*png" % (version, rundir, species) )
