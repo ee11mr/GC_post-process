@@ -1,0 +1,22 @@
+/users/mjr583/scratch/python_environments/envs/my_env/lib/python3.7/site-packages/statsmodels/tools/_testing.py:19: FutureWarning: pandas.util.testing is deprecated. Use the functions in the public API at pandas.testing instead.
+  import pandas.util.testing as tm
+
+============================
+ Job utilisation efficiency
+============================
+
+Job ID: 9922560
+Array Job ID: 9922399_161
+Cluster: viking
+User/Group: mjr583/clusterusers
+State: COMPLETED (exit code 0)
+Cores: 1
+CPU Utilized: 00:00:21
+CPU Efficiency: 70.00% of 00:00:30 core-walltime
+Job Wall-clock time: 00:00:30
+Memory Utilized: 1.30 MB
+Memory Efficiency: 0.01% of 10.00 GB
+ Requested wall clock time: 00:05:00
+    Actual wall clock time: 00:00:30
+Wall clock time efficiency: 10.0%
+           Job queued time: 00:00:21

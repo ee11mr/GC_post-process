@@ -1,0 +1,22 @@
+Submitted batch job 9922912
+12 plotting jobs to submit
+
+============================
+ Job utilisation efficiency
+============================
+
+Job ID: 9922911
+Cluster: viking
+User/Group: mjr583/clusterusers
+State: RUNNING
+Cores: 1
+CPU Utilized: 00:00:04
+CPU Efficiency: 8.51% of 00:00:47 core-walltime
+Job Wall-clock time: 00:00:47
+Memory Utilized: 198.63 MB
+Memory Efficiency: 1.94% of 10.00 GB
+WARNING: Efficiency statistics may be misleading for RUNNING jobs.
+ Requested wall clock time: 00:20:00
+    Actual wall clock time: 00:00:47
+Wall clock time efficiency: 3.9%
+           Job queued time: 00:00:14
