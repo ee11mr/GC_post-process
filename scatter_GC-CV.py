@@ -4,11 +4,14 @@
 #SBATCH --ntasks=1
 #SBATCH --mem=10gb
 #SBATCH --partition=interactive
-#SBATCH --time=00:10:00
+#SBATCH --time=00:01:00
 #SBATCH --output=LOGS/timeseries.log
 import sys
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.lines as mlines
+import matplotlib.transforms as mtransforms
 import matplotlib
 matplotlib.use('agg')
 sys.path.append('/users/mjr583/python_lib')
@@ -36,13 +39,19 @@ GC=pd.DataFrame({'Value':var_time}, index=time)
 df=CV.get_from_merge(d[species])
 df=df[GC.index[0]:GC.index[-1]]
 
-f,ax= plt.subplots(figsize=(12,4))
-ax.plot(df.index, df.Value, 'k', label='CVAO')
-ax.plot(GC.index, GC.Value, 'g', label='GEOS-Chem')
-plt.ylabel('%s (%s)' % (d[species]['abbr'], d[species]['unit']) )
+f,ax= plt.subplots(figsize=(8,8))
+ax.scatter(df.Value,GC.Value)
+plt.ylabel('GEOSChem %s (%s)' % (d[species]['abbr'], d[species]['unit']) )
+plt.xlabel('CVAO %s (%s)' % (d[species]['abbr'], d[species]['unit']) )
 
-import matplotlib.dates as mdates
-plt.gca().xaxis.set_major_locator(mdates.DayLocator(interval=2))
+Max=np.max([GC.Value.max(), df.Value.max()])
+Min=np.min([GC.Value.min(), df.Value.min()])
+plt.xlim(Min,Max)
+plt.ylim(Min,Max)
 
-plt.legend()
-plt.savefig('/users/mjr583/scratch/GC/%s/%s/plots/timeseries_%s.png' % (version, rundir, species) )
+line = mlines.Line2D([0, 1], [0, 1], color='red', alpha=0.2)
+transform = ax.transAxes
+line.set_transform(transform)
+ax.add_line(line)#, alpha=0.6)
+
+plt.savefig('/users/mjr583/scratch/GC/%s/%s/plots/scatter_GC-CV_%s.png' % (version, rundir, species) )

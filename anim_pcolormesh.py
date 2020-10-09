@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 #SBATCH --job-name=pcolor_plot
 #SBATCH --ntasks=1
-#SBATCH --mem=3gb
+#SBATCH --mem=15gb
 #SBATCH --partition=nodes
-#SBATCH --time=00:01:30
+#SBATCH --time=00:11:30
 #SBATCH --output=LOGS/pcolormesh_%a.log
 #SBATCH --array=1-2
 import os
