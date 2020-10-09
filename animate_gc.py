@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 #SBATCH --job-name=animate_gc
 #SBATCH --ntasks=1
-#SBATCH --mem=10gb
-#SBATCH --time=00:20:00
+#SBATCH --mem=2gb
+#SBATCH --time=00:10:00
 #SBATCH --output=LOGS/anim.log
 import os
 import sys 
@@ -29,11 +29,11 @@ nt=GC.get_n_timesteps(rundir, version)
 
 ## submit array jobs and wait to complete
 print('%s plotting jobs to submit' %nt) 
-os.system("sbatch --wait  --array=1-%s pcolormesh_CV.py %s %s %s" % (nt, rundir, species, version))
+os.system("sbatch --wait  --array=1-%s anim_pcolormesh.py %s %s %s" % (nt, rundir, species, version))
 
 ## animate and delete .pngs 
 with imageio.get_writer('/users/mjr583/scratch/GC/%s/%s/plots/%s.gif' % (version, rundir, species), mode='I') as writer:
-    for png in sorted(glob.glob('/users/mjr583/scratch/GC/%s/%s/plots/*png' % (version, rundir))):
+    for png in sorted(glob.glob('/users/mjr583/scratch/GC/%s/%s/plots/pcolorm*png' % (version, rundir))):
         image = imageio.imread(png) 
         writer.append_data(image)
-os.system("rm /users/mjr583/scratch/GC/%s/%s/plots/*png" % (version, rundir) )
+os.system("rm /users/mjr583/scratch/GC/%s/%s/plots/pcolorm_*png" % (version, rundir) )

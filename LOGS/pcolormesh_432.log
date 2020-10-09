@@ -1,6 +1,6 @@
 /users/mjr583/scratch/python_environments/envs/my_env/lib/python3.7/site-packages/statsmodels/tools/_testing.py:19: FutureWarning: pandas.util.testing is deprecated. Use the functions in the public API at pandas.testing instead.
   import pandas.util.testing as tm
 Traceback (most recent call last):
-  File "/var/spool/slurmdspool/job9922399/slurm_script", line 31, in <module>
+  File "/var/spool/slurmdspool/job9935645/slurm_script", line 31, in <module>
     im=ax.pcolormesh(X,Y, var[jobid, 0, :,:], vmin=0., vmax=var[:,0, 3:-3, 3:-3].max(), cmap='viridis')
 IndexError: index 432 is out of bounds for axis 0 with size 432

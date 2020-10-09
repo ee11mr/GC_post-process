@@ -5,18 +5,18 @@
  Job utilisation efficiency
 ============================
 
-Job ID: 9922873
-Array Job ID: 9922859_14
+Job ID: 9935660
+Array Job ID: 9935645_14
 Cluster: viking
 User/Group: mjr583/clusterusers
 State: COMPLETED (exit code 0)
 Cores: 1
-CPU Utilized: 00:00:14
-CPU Efficiency: 63.64% of 00:00:22 core-walltime
-Job Wall-clock time: 00:00:22
-Memory Utilized: 1.30 MB
-Memory Efficiency: 0.01% of 10.00 GB
- Requested wall clock time: 00:05:00
-    Actual wall clock time: 00:00:22
-Wall clock time efficiency: 7.3%
-           Job queued time: 00:00:22
+CPU Utilized: 00:00:23
+CPU Efficiency: 47.92% of 00:00:48 core-walltime
+Job Wall-clock time: 00:00:48
+Memory Utilized: 1.67 GB
+Memory Efficiency: 8.34% of 20.00 GB
+ Requested wall clock time: 00:02:00
+    Actual wall clock time: 00:00:48
+Wall clock time efficiency: 40.0%
+           Job queued time: 00:00:06
