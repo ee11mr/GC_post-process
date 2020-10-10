@@ -21,11 +21,18 @@ from CVAO_dict import CVAO_dict as d
 import CVAO_tools as CV
 plt.style.use('seaborn-darkgrid')
 
-rundir=sys.argv[1]
-species=sys.argv[2]
-version='12.9.3'
+inputs=GC.get_arguments()
+rundir=inputs.rundir
+variable=inputs.var
+version=inputs.version
 
-var, lat, lon, lev, time = GC.get_gc_var(rundir, species, version)
+var, lat, lon, lev, time = GC.get_gc_var(rundir, variable, version)
+
+times=[]
+for dt in time:
+    rounded_dt=GC.hour_rounder(dt)
+    times.append(rounded_dt)
+time=np.array(times)
 
 y = rp.find_nearest(lat, 16.52)
 x = rp.find_nearest(lon, -24.51)
@@ -36,13 +43,13 @@ for t in range(len(time)):
 GC=pd.DataFrame({'Value':var_time}, index=time)
 
 ## Get Merge observations
-df=CV.get_from_merge(d[species])
+df=CV.get_from_merge(d[variable])
 df=df[GC.index[0]:GC.index[-1]]
 
 f,ax= plt.subplots(figsize=(8,8))
 ax.scatter(df.Value,GC.Value)
-plt.ylabel('GEOSChem %s (%s)' % (d[species]['abbr'], d[species]['unit']) )
-plt.xlabel('CVAO %s (%s)' % (d[species]['abbr'], d[species]['unit']) )
+plt.ylabel('GEOSChem %s (%s)' % (d[variable]['abbr'], d[variable]['unit']) )
+plt.xlabel('CVAO %s (%s)' % (d[variable]['abbr'], d[variable]['unit']) )
 
 Max=np.max([GC.Value.max(), df.Value.max()])
 Min=np.min([GC.Value.min(), df.Value.min()])
@@ -54,4 +61,4 @@ transform = ax.transAxes
 line.set_transform(transform)
 ax.add_line(line)#, alpha=0.6)
 
-plt.savefig('/users/mjr583/scratch/GC/%s/%s/plots/scatter_GC-CV_%s.png' % (version, rundir, species) )
+plt.savefig('/users/mjr583/scratch/GC/%s/%s/plots/scatter_GC-CV_%s.png' % (version, rundir, variable) )
