@@ -28,16 +28,22 @@ inputs=GC.get_arguments()
 rundir=inputs.rundir
 variable=inputs.var
 version=inputs.version
+plot_pressure=inputs.plot_ps
 
 ## get number of arrays to plot (timestep)
 nt=GC.get_n_timesteps(rundir, version)
 
 ## submit array jobs and wait to complete
-print('%s plotting jobs to submit' %nt) 
-os.system("sbatch --wait  --array=1-%s anim_pcolormesh.py -r %s -v %s -V %s" % (nt, rundir, variable, version))
+print('%s plotting jobs to submit' %nt)
+if plot_pressure:
+    outname='/users/mjr583/scratch/GC/%s/%s/plots/%s_with_ps.mp4' % (version, rundir, variable)
+    os.system("sbatch --wait  --array=1-%s anim_pcolormesh_with_p.py -r %s -v %s -V %s" % (nt, rundir, variable, version))
+else:
+    outname='/users/mjr583/scratch/GC/%s/%s/plots/%s.mp4' % (version, rundir, variable)
+    os.system("sbatch --wait  --array=1-%s anim_pcolormesh.py -r %s -v %s -V %s" % (nt, rundir, variable, version))
 
 ## animate and delete .pngs 
-with imageio.get_writer('/users/mjr583/scratch/GC/%s/%s/plots/%s.gif' % (version, rundir, variable), mode='I') as writer:
+with imageio.get_writer(outname, mode='I') as writer:
     for png in sorted(glob.glob('/users/mjr583/scratch/GC/%s/%s/plots/pcolorm_*%s*png' % (version, rundir, variable))):
         print(png)
         image = imageio.imread(png) 

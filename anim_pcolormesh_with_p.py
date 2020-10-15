@@ -10,6 +10,7 @@
 import os
 import sys
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('agg')
@@ -25,12 +26,27 @@ variable=inputs.var
 version=inputs.version
 
 var, lat, lon, lev, time = GC.get_gc_var(rundir, variable, version)
+print(time[jobid])
+ms=GC.closest_met(time[jobid])
+print(ms)
+ps , mlat,mlon=GC.get_gc_input(ms)
+mX, mY = np.meshgrid(mlon, mlat)
+levels=np.arange(950, 1035, 4)
 
 f,ax= plt.subplots(figsize=(8,8))
 X,Y=np.meshgrid(lon,lat)
 m=rp.get_basemap(resolution='i', lines=True, lllat=lat.min(), lllon=lon.min(), urlat=lat.max(), urlon=lon.max(), ax=ax)
+
+for x in range(len(mlon)):
+    for y in range(len(mlat)):
+        if m.is_land(mlon[x],mlat[y]):
+            ps[y,x]=np.nan
+
 im=ax.pcolormesh(X,Y, var[jobid, 0, :,:], vmin=0., vmax=var[:,0, 60:-6, 60:-6].max(), cmap='viridis')
+PS = ax.contour(mX,mY, ps, colors='w', levels=levels,zorder=11)
+ax.clabel(PS, inline=1, fmt='%1d', fontsize=10)
+
 cbar = f.colorbar(im,orientation='horizontal')
 cbar.ax.set_xlabel('%s (%s)' % (d[variable]['abbr'], d[variable]['unit']))
 plt.title(time[jobid], fontsize=14)
-plt.savefig('/users/mjr583/scratch/GC/%s/%s/plots/pcolorm_%s_%s.png' % (version, rundir, variable, time[jobid]) )
+plt.savefig('/users/mjr583/scratch/GC/%s/%s/plots/TESTpcolorm_%s_%s.png' % (version, rundir, variable, time[jobid]) )
