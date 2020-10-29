@@ -42,11 +42,11 @@ for x in range(len(mlon)):
         if m.is_land(mlon[x],mlat[y]):
             ps[y,x]=np.nan
 
-im=ax.pcolormesh(X,Y, var[jobid, 0, :,:], vmin=0., vmax=var[:,0, 60:-6, 60:-6].max(), cmap='viridis')
+im=ax.pcolormesh(X,Y, var[jobid, 0, :,:], vmin=0., vmax=var[:,0, 60:-6, 60:-60].max(), cmap='viridis')
 PS = ax.contour(mX,mY, ps, colors='w', levels=levels,zorder=11)
 ax.clabel(PS, inline=1, fmt='%1d', fontsize=10)
 
 cbar = f.colorbar(im,orientation='horizontal')
 cbar.ax.set_xlabel('%s (%s)' % (d[variable]['abbr'], d[variable]['unit']))
 plt.title(time[jobid], fontsize=14)
-plt.savefig('/users/mjr583/scratch/GC/%s/%s/plots/TESTpcolorm_%s_%s.png' % (version, rundir, variable, time[jobid]) )
+plt.savefig('/users/mjr583/scratch/GC/%s/%s/plots/pcolorm_%s_%s.png' % (version, rundir, variable, time[jobid]) )
