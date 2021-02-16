@@ -63,7 +63,7 @@ if variable=='all':
                 plt.gca().xaxis.set_major_locator(mdates.MonthLocator(interval=interval))
 
             plt.legend()
-            plt.savefig('/users/mjr583/scratch/GC/%s/%s/plots/timeseries_%s.png' % (version, rundir, variable) )
+            plt.savefig('/users/mjr583/scratch/GC/%s/rundirs/%s/plots/timeseries_%s.png' % (version, rundir, variable) )
         except:
             print(variable, 'failed to plot')
             continue
@@ -102,4 +102,4 @@ else:
         plt.gca().xaxis.set_major_locator(mdates.MonthLocator(interval=interval))
 
     plt.legend()
-    plt.savefig('/users/mjr583/scratch/GC/%s/%s/plots/timeseries_%s.png' % (version, rundir, variable) )
+    plt.savefig('/users/mjr583/scratch/GC/%s/rundirs/%s/plots/timeseries_%s.png' % (version, rundir, variable) )

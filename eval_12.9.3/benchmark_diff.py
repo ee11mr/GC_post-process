@@ -32,7 +32,7 @@ rundir=inputs.rundir
 variable=inputs.var
 version='12.9.3'
 
-variables=['O3','CO','NO2','NO','ethane','propane']
+variables=['O3','CO']#,'NO2','NO','ethane','propane']
 logscale=False
 europeswitch=False
 suff=''
@@ -68,10 +68,8 @@ for variable in variables:
     fltr=np.where(var_array < 0.)
     var_array[fltr] = np.nan
     var=np.mean(var_array[:,0,:,:],0)
-    diff=bench-var   
+    diff=100 - (bench/var*100)
     bounds = np.arange(-10,10.5,.5)
-    #idx=np.searchsorted(bounds,0)
-    #bounds=np.insert(bounds,idx,0)
     norm = BoundaryNorm(bounds, cmap.N)
 
     f,ax= plt.subplots(figsize=(8,8))
@@ -81,12 +79,12 @@ for variable in variables:
     cbar = f.colorbar(im,orientation='horizontal')
     cbar.ax.set_xlabel('%s (%s)' % (d[variable]['abbr'], d[variable]['unit']))
     plt.title('Annual mean: Benchmark - 12.9.3', fontsize=14)
-    plt.savefig('/users/mjr583/scratch/GC/%s/%s/plots/benchmark-diff_annual_%s%s.png' % (version, rundir, variable, suff ))
+    plt.savefig('/users/mjr583/GC/eval_12.9.3/plots/benchmark-diff_annual_%s%s.png' % (variable, suff ))
     plt.close()
 
-    var=np.mean( np.concatenate([var_array[-31:,0,:,:],var_array[:60,0,:,:]]),0)
+    var=np.mean( np.concatenate([var_array[-1:,0,:,:],var_array[:2,0,:,:]]),0)
     bench=np.mean( np.concatenate( [ benchmark[-1:,0,:,:], benchmark[:2,0,:,:] ] ),0)
-    diff=bench-var   
+    diff=100 - (bench/var*100)   
 
     f,ax= plt.subplots(figsize=(8,8))
     m=rp.get_basemap(resolution='i', lines=False, lllat=latmin, lllon=lonmin, urlat=latmax, urlon=lonmax, ax=ax)
@@ -94,12 +92,12 @@ for variable in variables:
     cbar = f.colorbar(im,orientation='horizontal')
     cbar.ax.set_xlabel('%s (%s)' % (d[variable]['abbr'], d[variable]['unit']))
     plt.title('DJF Benchmark - 12.9.3', fontsize=14)
-    plt.savefig('/users/mjr583/scratch/GC/%s/%s/plots/benchmark-diff_DJF_%s%s.png' % (version, rundir, variable, suff))
+    plt.savefig('/users/mjr583/GC/eval_12.9.3/plots/benchmark-diff_DJF_%s%s.png' % (variable, suff))
     plt.close()
 
-    var=np.mean( var_array[152:244,0,:,:],0 )
+    var=np.mean( var_array[5:8,0,:,:],0 )
     bench=np.mean(benchmark[5:8,0,:,:],0)
-    diff=bench-var  
+    diff=100 - (bench/var *100)
 
     f,ax= plt.subplots(figsize=(8,8))
     m=rp.get_basemap(resolution='i', lines=False, lllat=latmin, lllon=lonmin, urlat=latmax, urlon=lonmax, ax=ax)
@@ -107,12 +105,12 @@ for variable in variables:
     cbar = f.colorbar(im,orientation='horizontal')
     cbar.ax.set_xlabel('%s (%s)' % (d[variable]['abbr'], d[variable]['unit']))
     plt.title('JJA Benchmark - 12.9.3', fontsize=14)
-    plt.savefig('/users/mjr583/scratch/GC/%s/%s/plots/benchmark-diff_JJA_%s%s.png' % (version, rundir, variable, suff ))
+    plt.savefig('/users/mjr583/GC/eval_12.9.3/plots/benchmark-diff_JJA_%s%s.png' % (variable, suff ))
     plt.close()
 
-    var=np.mean( var_array[91:122,0,:,:],0 )
+    var=np.mean( var_array[2:5,0,:,:],0 )
     bench=np.mean(benchmark[2:5,0,:,:],0)
-    diff=bench-var   
+    diff=100 - (bench/var * 100)
 
     f,ax= plt.subplots(figsize=(8,8))
     m=rp.get_basemap(resolution='i', lines=False, lllat=latmin, lllon=lonmin, urlat=latmax, urlon=lonmax, ax=ax)
@@ -120,12 +118,12 @@ for variable in variables:
     cbar = f.colorbar(im,orientation='horizontal')
     cbar.ax.set_xlabel('%s (%s)' % (d[variable]['abbr'], d[variable]['unit']))
     plt.title('MAM Benchmark - 12.9.3', fontsize=14)
-    plt.savefig('/users/mjr583/scratch/GC/%s/%s/plots/benchmark-diff_MAM_%s%s.png' % (version, rundir, variable, suff ))
+    plt.savefig('/users/mjr583/GC/eval_12.9.3/plots/benchmark-diff_MAM_%s%s.png' % (variable, suff ))
     plt.close()
 
-    var=np.mean( var_array[244:335,0,:,:],0 )
+    var=np.mean( var_array[8:11,0,:,:],0 )
     bench=np.mean(benchmark[8:11,0,:,:],0)
-    diff=bench-var   
+    diff=100 - (bench/var * 100)
 
     f,ax= plt.subplots(figsize=(8,8))
     m=rp.get_basemap(resolution='i', lines=False, lllat=latmin, lllon=lonmin, urlat=latmax, urlon=lonmax, ax=ax)
@@ -133,6 +131,6 @@ for variable in variables:
     cbar = f.colorbar(im,orientation='horizontal')
     cbar.ax.set_xlabel('%s (%s)' % (d[variable]['abbr'], d[variable]['unit']))
     plt.title('SON Benchmark - 12.9.3', fontsize=14)
-    plt.savefig('/users/mjr583/scratch/GC/%s/%s/plots/benchmark-diff_SON_%s%s.png' % (version, rundir, variable, suff ))
+    plt.savefig('/users/mjr583/GC/eval_12.9.3/plots/benchmark-diff_SON_%s%s.png' % (variable, suff ))
     plt.close()
 

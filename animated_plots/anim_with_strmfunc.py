@@ -69,4 +69,4 @@ strm = ax.streamplot(mlon,mlat,U,V,density=4, zorder=11, color='w', linewidth=lw
 cbar = f.colorbar(im,orientation='horizontal')
 cbar.ax.set_xlabel('%s (%s)' % (d[variable]['abbr'], d[variable]['unit']))
 plt.title(time[jobid], fontsize=14)
-plt.savefig('/users/mjr583/scratch/GC/%s/%s/plots/pcolorm_strmfunc_%s_%s.png' % (version, rundir, variable, time[jobid]) )
+plt.savefig('/users/mjr583/scratch/GC/%s/rundirs/%s/plots/pcolorm_strmfunc_%s_%s.png' % (version, rundir, variable, time[jobid]) )

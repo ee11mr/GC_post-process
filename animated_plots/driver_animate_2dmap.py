@@ -27,22 +27,22 @@ import glob
 def submit_batch_plot(rundir, variable, nt, version='12.9.3', plot_pressure=False, plot_strmfunc=False):
     print('%s plotting jobs to submit' %nt)
     if plot_pressure:
-        outname='/users/mjr583/scratch/GC/%s/%s/plots/%s_with_ps.mp4' % (version, rundir, variable)
+        outname='/users/mjr583/scratch/GC/%s/rundirs/%s/plots/%s_%s_ps.mp4' % (version, rundir, variable, rundir)
         os.system("sbatch --wait  --array=1-%s anim_with_p.py -r %s -v %s -V %s" % (nt, rundir, variable, version))
     elif plot_strmfunc:
-        outname='/users/mjr583/scratch/GC/%s/%s/plots/%s_with_strmfunc.mp4' % (version, rundir, variable)
+        outname='/users/mjr583/scratch/GC/%s/rundirs/%s/plots/%s_%s_strmfunc.mp4' % (version, rundir, variable, rundir)
         os.system("sbatch --wait  --array=1-%s anim_with_strmfunc.py -r %s -v %s -V %s" % (nt, rundir, variable, version))
     else:
-        outname='/users/mjr583/scratch/GC/%s/%s/plots/%s.mp4' % (version, rundir, variable)
+        outname='/users/mjr583/scratch/GC/%s/rundirs/%s/plots/%s_%s.mp4' % (version, rundir, variable, rundir)
         os.system("sbatch --wait  --array=1-%s anim_map.py -r %s -v %s -V %s" % (nt, rundir, variable, version))
     
     ## animate pngs then delete individual plots
     with imageio.get_writer(outname, mode='I') as writer:
-        for png in sorted(glob.glob('/users/mjr583/scratch/GC/%s/%s/plots/pcolorm_*%s*png' % (version, rundir, variable))):
+        for png in sorted(glob.glob('/users/mjr583/scratch/GC/%s/rundirs/%s/plots/pcolorm_*%s*png' % (version, rundir, variable))):
             print(png)
             image = imageio.imread(png) 
             writer.append_data(image)
-    os.system("rm /users/mjr583/scratch/GC/%s/%s/plots/pcolorm_*%s*png" % (version, rundir, variable) )
+    os.system("rm /users/mjr583/scratch/GC/%s/rundirs/%s/plots/pcolorm_*%s*png" % (version, rundir, variable) )
     return
 
 
@@ -53,10 +53,10 @@ def main():
     version=inputs.version
     plot_pressure=inputs.plot_ps
     plot_strmfunc=inputs.strmfunc
-
+    
     ## get number of arrays to plot (timestep)
     nt=GC.get_n_timesteps(rundir, version)
-
+    
     submit_batch_plot(rundir, variable, nt, version, plot_pressure, plot_strmfunc)
     
 if __name__ == "__main__":

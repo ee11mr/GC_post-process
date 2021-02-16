@@ -19,7 +19,6 @@ import RowPy as rp
 import matplotlib.colors as mcolors
 from CVAO_dict import CVAO_dict as d
 
-
 current_dir = os.path.dirname(__file__)
 rgb_WhGrYlRd = np.genfromtxt('/users/mjr583/python_lib/colormaps/WhGrYlRd.txt',
                                      delimiter=' ')
@@ -33,7 +32,7 @@ version=inputs.version
 
 variables=['O3','CO','NO2','NO','ethane','propane']
 logscale=False
-europeswitch=True
+europeswitch=False
 suff=''
 if europeswitch:
     latmin=30. 
@@ -42,6 +41,7 @@ if europeswitch:
     lonmax=50.
     suff+='_europe'
 else:
+    var_array, lat, lon, lev, time = GC.get_gc_var(rundir, variable, version, year='2016')
     latmin=lat.min() 
     latmax=lat.max() 
     lonmin=lon.min() 
@@ -69,9 +69,9 @@ for variable in variables:
     cbar = f.colorbar(im,orientation='horizontal')
     cbar.ax.set_xlabel('%s (%s)' % (d[variable]['abbr'], d[variable]['unit']))
     #plt.title(time[jobid], fontsize=14)
-    plt.savefig('/users/mjr583/scratch/GC/%s/%s/plots/global_map_annualmean_%s%s.png' % (version, rundir, variable, suff ))
+    plt.savefig('/users/mjr583/GC/eval_12.9.3/plots/global_map_annualmean_%s%s.png' % (variable, suff ))
     plt.close()
-
+    '''
     var=np.mean( np.concatenate([var_array[-31:,0,:,:],var_array[:60,0,:,:]]),0)
     f,ax= plt.subplots(figsize=(8,8))
     m=rp.get_basemap(resolution='i', lines=False, lllat=latmin, lllon=lonmin, urlat=latmax, urlon=lonmax, ax=ax)
@@ -111,4 +111,4 @@ for variable in variables:
     #plt.title(time[jobid], fontsize=14)
     plt.savefig('/users/mjr583/scratch/GC/%s/%s/plots/global_map_SONmean_%s%s.png' % (version, rundir, variable, suff ))
     plt.close()
-
+    '''
