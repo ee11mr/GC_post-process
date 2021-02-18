@@ -21,7 +21,7 @@ from CVAO_dict import CVAO_dict as d
 import RowPy as rp
 import GC_tools as GC
 
-rundir='old_ceds_tropchem_merra_4x5'
+rundir='boundary_conds_run'
 version='12.9.3'
 variables=['EmisCO_BioBurn', 'EmisCO_Total']
 
@@ -31,13 +31,13 @@ times=[]
 
 
 #emissions, time, lat, lon, lev, area = GC.HEMCO_Diag_read(rundir='tropchem_merra_4x5', version=version,variable='EmisCO_Total')
-old_emissions, time, lat, lon, lev, area = GC.HEMCO_Diag_read(rundir='old_ceds_tropchem_merra_4x5', version=version,variable='EmisCO_Total')
-print(emissions.sum())
-print(old_emissions.sum())
+#old_emissions, time, lat, lon, lev, area = GC.HEMCO_Diag_read(rundir=rundir, version=version,variable='EmisCO_Total')
+#print(emissions.sum())
+#print(old_emissions.sum())
 
-sys.exit()
+#sys.exit()
 
-for infile in sorted(glob.glob('/users/mjr583/scratch/GC/%s/rundirs/%s/OutputDir/HEMCO_diag*.nc' % (version, rundir))):
+for infile in sorted(glob.glob('/users/mjr583/scratch/GC/%s/rundirs/%s/OutputDir/HEMCO_diagnostics.201701010000.nc' % (version, rundir))):
     fh=Dataset(infile)
     time=fh.variables['time'][:]
     lat=fh.variables['lat'][:]
@@ -111,15 +111,15 @@ for var in names:
             continue
         plt.scatter(df[str(year)].index.month, df.Value[str(year)], label=str(year))
     plt.legend()
-    plt.savefig('./test.png')
-    plt.close()
-    sys.exit()
+    #plt.savefig('./test.png')
+    #plt.close()
+    #sys.exit()
 
 
     f,ax= plt.subplots(figsize=(12,4))
     ax.plot(times, ems, 'orchid', label=long_name)
     plt.ylabel(unit)
     plt.legend()
-    #plt.savefig('/users/mjr583/scratch/GC/%s/%s/emissions/%s.png' % (version, rundir, long_name) )
+    plt.savefig('./plots/%s_%s.png' % (rundir, long_name) )
     plt.close()
 

@@ -26,7 +26,7 @@ rgb_WhGrYlRd = np.genfromtxt('/users/mjr583/python_lib/colormaps/WhGrYlRd.txt',
 WhGrYlRd = mcolors.ListedColormap(rgb_WhGrYlRd/255.0)
 cmap=WhGrYlRd
 
-variable='NO2'
+variable='O3'
 
 for n in range(12):
     control, lat, lon, lev, time = GC.get_gc_var('tropchem_merra_4x5', variable=variable, version='12.9.3', year=2016)

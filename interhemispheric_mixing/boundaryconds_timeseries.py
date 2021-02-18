@@ -39,7 +39,7 @@ variables=['CO','O3','C2H6','NO2','NO']
 labels=['Control','No BB','No African BB']
 bc = '/users/mjr583/scratch/GC/12.9.3/rundirs/irma_025x03125/GC_BC/'
 bc_nobb = '/users/mjr583/scratch/GC/12.9.3/rundirs/irma_025x03125_noBB/GC_BC/'
-bc_noaf = '/users/mjr583/scratch/GC/12.9.3/rundirs/irma_025x03125_noAfrBB/GC_BC/'
+bc_noaf = '/users/mjr583/scratch/GC/12.9.3/rundirs/irma_025x03125_noAfBB/GC_BC/'
 
 x = -24.9
 y = 16.9
@@ -48,7 +48,7 @@ CO=[] ; times=[]
 for var in variables:
     print(var)
     CO=[] ; times=[]
-    for infile in sorted(glob.glob('%s*Boundary*201708*z.nc4' %bc)):
+    for infile in sorted(glob.glob('%s*Boundary*201708*control.nc4' %bc)):
         print(infile)
         fh=Dataset(infile)
         co = fh.variables['SpeciesBC_%s' %var][:]*1e9
@@ -72,7 +72,7 @@ for var in variables:
     df=pd.DataFrame({'BC_CO':CO}, index=time)
 
     CO=[] ; times=[]
-    for infile in sorted(glob.glob('%s*Boundary*201708*B.nc4' %bc_nobb)):
+    for infile in sorted(glob.glob('%s*Boundary*201708*NOBB.nc4' %bc_nobb)):
         print(infile)
         fh=Dataset(infile)
         co = fh.variables['SpeciesBC_%s' %var][:]*1e9
@@ -87,7 +87,7 @@ for var in variables:
     nobb=pd.DataFrame({'BC_CO':CO}, index=time)  
 
     CO=[] ; times=[]
-    for infile in sorted(glob.glob('%s*Boundary*201708*B.nc4' %bc_noaf)):
+    for infile in sorted(glob.glob('%s*Boundary*201708*noAfBB.nc4' %bc_noaf)):
         print(infile)
         fh=Dataset(infile)
         co = fh.variables['SpeciesBC_%s' %var][:]*1e9

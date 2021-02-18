@@ -26,18 +26,18 @@ rgb_WhGrYlRd = np.genfromtxt('/users/mjr583/python_lib/colormaps/WhGrYlRd.txt',
 WhGrYlRd = mcolors.ListedColormap(rgb_WhGrYlRd/255.0)
 cmap=WhGrYlRd
 
-variable='CO'
-out='first'
+variable='C2H6'
+out='newcontrol'
 
-control_bc, lat, lon, lev, time = GC.get_gc_bc('irma_025x03125', var='CO')
+control_bc, lat, lon, lev, time = GC.get_gc_bc('irma_025x03125', var=variable)
 fltr=np.where(control_bc < 0.)
 control_bc[fltr] = np.nan
 
-nobb_bc, lat, lon, lev, notime = GC.get_gc_bc('irma_025x03125_noBB', 'CO')
+nobb_bc, lat, lon, lev, notime = GC.get_gc_bc('irma_025x03125_noBB', variable)
 fltr=np.where(nobb_bc < 0.)
 nobb_bc[fltr] = np.nan
 
-noaf_bc, lat, lon, lev, aftime = GC.get_gc_bc('irma_025x03125_noAfBB', 'CO')
+noaf_bc, lat, lon, lev, aftime = GC.get_gc_bc('irma_025x03125_noAfBB', variable)
 fltr=np.where(noaf_bc < 0.)
 noaf_bc[fltr] = np.nan
 
@@ -69,5 +69,5 @@ ax3.set_title('No biomass burning')
 
 plt.suptitle('GC Boundary Conditions')
 
-plt.savefig('/users/mjr583/GC/interhemispheric_mixing/plots/mapGC_BC_%s.png' %out) 
+plt.savefig('/users/mjr583/GC/interhemispheric_mixing/plots/mapGC_BC_%s_%s.png' %(variable, out)) 
 plt.close()
